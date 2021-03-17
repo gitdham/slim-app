@@ -18,9 +18,12 @@ return function (App $app) {
 	$app->get('/about', function (Request $request, Response $response) use ($container) {
 		// log message
 		$container->get('logger')->info("Slim-Skeleton '/about' route");
-		$lname = $request->getAttribute('lastname');
 
-		return "about page " . $lname;
+		return "about page";
+	});
+
+	$app->post('/about', function (Request $request, Response $response) {
+		return 'about from post';
 	});
 
 	$app->get('/customers', function (Request $request, Response $response) use ($container) {
@@ -60,11 +63,9 @@ return function (App $app) {
 			'address' => FILTER_SANITIZE_SPECIAL_CHARS,
 			'address' => FILTER_SANITIZE_STRING
 		);
-
 		$inputs = filter_var_array($inputs, $inputValidation);
+
 		$invalid_input = [];
-
-
 		foreach ($inputs as $input => $val) {
 			if (empty($val)) {
 				$invalid_input[] = $input;
@@ -89,17 +90,5 @@ return function (App $app) {
 				return json_encode(["msg" => "Insert customer fail"]);
 			}
 		}
-
-
-
-		$first_name = $request->getParsedBodyParam('first_name');
-		$last_name = htmlspecialchars($request->getParsedBodyParam('last_name'));
-		$email =  $request->getParsedBodyParam('email');
-		// $email = filter_var($email, FILTER_VALIDATE_EMAIL);
-		$phone = $request->getParsedBodyParam('phone');
-		$address = $request->getParsedBodyParam('address');
-
-		echo $email;
-		// echo $last_name;
 	});
 };

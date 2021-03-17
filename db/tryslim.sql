@@ -30,7 +30,7 @@ CREATE TABLE `customers` (
   `phone` varchar(14) DEFAULT NULL,
   `address` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'Ani','Santika','ani@mail.co','082212345678','cibiru'),(2,'Boni','Bonbon','bon@mail.co','089876531233','dago'),(3,'Ratih','Hati','ratt@mail.co','089234534553','ledeng'),(4,'dewi','dewita','dw@mail.co','123412341243','alamat'),(5,'nana','surya','nana@q.co','081245','digadung'),(6,'tata','surya','tata@mail.co.id','0262','digadung');
+INSERT INTO `customers` VALUES (1,'Ani','Santika','ani@mail.co','082212345678','cibiru'),(2,'Boni','Bonbon','bon@mail.co','089876531233','dago'),(3,'Ratih','Hati','ratt@mail.co','089234534553','ledeng'),(4,'dewi','dewita','dw@mail.co','123412341243','alamat'),(5,'nana','surya','nana@q.co','081245','digadung'),(6,'tata','surya','tata@mail.co.id','0262','digadung'),(7,'ranti','kiran','ra@ran.ti','08997654','mars');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-17 16:36:13
+-- Dump completed on 2021-03-17 17:04:31
