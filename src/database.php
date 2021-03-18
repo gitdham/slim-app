@@ -34,7 +34,10 @@ class Database {
   }
 
   public function execute() {
-    $this->stmt->execute();
+    if (!$this->stmt->execute()) {
+      echo 'query error';
+      die;
+    }
   }
 
   public function resultSet() {

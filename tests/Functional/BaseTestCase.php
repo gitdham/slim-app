@@ -2,6 +2,11 @@
 
 namespace Tests\Functional;
 
+// database
+require __DIR__ . '/../../src/database.php';
+// controllers
+require __DIR__ . '/../../src/controllers/product.php';
+
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;

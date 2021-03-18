@@ -3,6 +3,7 @@
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use products\Product;
 
 return function (App $app) {
 	$container = $app->getContainer();
@@ -52,6 +53,10 @@ return function (App $app) {
 
 	$app->post('/customers', function (Request $request, Response $response) use ($container) {
 		$inputs = $request->getParsedBody();
+		if (!isset($inputs)) {
+			return $response->withJson(["msg" => "Insert customer fail"], 400);
+		}
+
 		$inputValidation = array(
 			'first_name' => FILTER_SANITIZE_SPECIAL_CHARS,
 			'first_name' => FILTER_SANITIZE_STRING,
@@ -76,7 +81,7 @@ return function (App $app) {
 			return $response->withJson([
 				'msg' => 'input invalid',
 				'inputs' => $invalid_input
-			]);
+			], 400);
 		} else {
 			$values = array_values($inputs);
 			$db = $container->get('database');
@@ -85,10 +90,26 @@ return function (App $app) {
 			$db->execute();
 
 			if ($db->rowCount() > 0) {
-				return json_encode(["msg" => "Insert customer success"]);
+				return $response->withJson(["msg" => "Insert customer success"]);
 			} else {
-				return json_encode(["msg" => "Insert customer fail"]);
+				return $response->withJson(["msg" => "Insert customer fail"], 500);
 			}
 		}
+	});
+
+	// product rute
+	$app->get('/product', function (Request $req, Response $res) use ($container) {
+		$result = Product::getProducts($req,  $res, $container);
+		return $result;
+	});
+
+	$app->get('/product/{id}', function (Request $req, Response $res) use ($container) {
+		$result = Product::selectProduct($req,  $res, $container);
+		return $result;
+	});
+
+	$app->post('/product', function (Request $req, Response $res) use ($container) {
+		$result = Product::insertProduct($req,  $res, $container);
+		return $result;
 	});
 };

@@ -42,6 +42,60 @@ LOCK TABLES `customers` WRITE;
 INSERT INTO `customers` VALUES (1,'Ani','Santika','ani@mail.co','082212345678','cibiru'),(2,'Boni','Bonbon','bon@mail.co','089876531233','dago'),(3,'Ratih','Hati','ratt@mail.co','089234534553','ledeng'),(4,'dewi','dewita','dw@mail.co','123412341243','alamat'),(5,'nana','surya','nana@q.co','081245','digadung'),(6,'tata','surya','tata@mail.co.id','0262','digadung'),(7,'ranti','kiran','ra@ran.ti','08997654','mars');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `products`
+--
+
+DROP TABLE IF EXISTS `products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `img` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `products`
+--
+
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES (1,'antiseptic',15000.00,''),(2,'alkohol',25000.00,''),(8,'carbon',34000.00,'carbon.png'),(10,'test product',9999.00,'test_img.png'),(11,'test product',9999.00,'test_img.png'),(12,'test product',9999.00,'test_img.png'),(13,'test product',9999.00,'test_img.png'),(14,'test product',9999.00,'test_img.png'),(15,'test product',9999.00,'test_img.png');
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `test_products`
+--
+
+DROP TABLE IF EXISTS `test_products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `test_products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `img` varchar(50) DEFAULT NULL,
+  `time_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `time_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `test_products`
+--
+
+LOCK TABLES `test_products` WRITE;
+/*!40000 ALTER TABLE `test_products` DISABLE KEYS */;
+INSERT INTO `test_products` VALUES (1,'test product',9999.00,'test_img.png','2021-03-18 14:09:56','2021-03-18 07:13:32'),(2,'test product',9999.00,'test_img.png','2021-03-18 14:09:56','2021-03-18 07:13:32'),(3,'test product',9999.00,'test_img.png','0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,'test product',9999.00,'test_img.png','2021-03-18 14:18:22','2021-03-18 07:18:22'),(5,'test product',9999.00,'test_img.png','2021-03-18 14:18:35','2021-03-18 07:18:35'),(6,'test product',9999.00,'test_img.png','2021-03-18 14:26:44','2021-03-18 07:26:44'),(7,'test post product',9999.00,'test_img.png','2021-03-18 14:32:42','2021-03-18 07:32:42');
+/*!40000 ALTER TABLE `test_products` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -52,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-17 17:04:31
+-- Dump completed on 2021-03-18 15:39:49
