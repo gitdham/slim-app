@@ -93,7 +93,7 @@ CREATE TABLE `test_products` (
 
 LOCK TABLES `test_products` WRITE;
 /*!40000 ALTER TABLE `test_products` DISABLE KEYS */;
-INSERT INTO `test_products` VALUES (1,'test product',9999.00,'test_img.png','2021-03-18 14:09:56','2021-03-18 07:13:32'),(2,'test product',9999.00,'test_img.png','2021-03-18 14:09:56','2021-03-18 07:13:32'),(3,'test product',9999.00,'test_img.png','0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,'test product',9999.00,'test_img.png','2021-03-18 14:18:22','2021-03-18 07:18:22'),(5,'test product',9999.00,'test_img.png','2021-03-18 14:18:35','2021-03-18 07:18:35'),(6,'test product',9999.00,'test_img.png','2021-03-18 14:26:44','2021-03-18 07:26:44'),(7,'test post product',9999.00,'test_img.png','2021-03-18 14:32:42','2021-03-18 07:32:42');
+INSERT INTO `test_products` VALUES (1,'bensin',9500.00,'bensin.png','2021-03-18 14:09:56','2021-03-18 10:00:03'),(2,'test product',9999.00,'test_img.png','2021-03-18 14:09:56','2021-03-18 07:13:32'),(3,'test product',9999.00,'test_img.png','0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,'test product',9999.00,'test_img.png','2021-03-18 14:18:22','2021-03-18 07:18:22'),(5,'test product',9999.00,'test_img.png','2021-03-18 14:18:35','2021-03-18 07:18:35'),(6,'test product',9999.00,'test_img.png','2021-03-18 14:26:44','2021-03-18 07:26:44'),(7,'test post product',9999.00,'test_img.png','2021-03-18 14:32:42','2021-03-18 07:32:42');
 /*!40000 ALTER TABLE `test_products` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -106,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-18 15:39:49
+-- Dump completed on 2021-03-18 17:00:30

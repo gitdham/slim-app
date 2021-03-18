@@ -112,4 +112,9 @@ return function (App $app) {
 		$result = Product::insertProduct($req,  $res, $container);
 		return $result;
 	});
+
+	$app->put('/product', function (Request $req, Response $res) use ($container) {
+		$result = Product::updateProduct($req,  $res, $container);
+		return $result;
+	});
 };
