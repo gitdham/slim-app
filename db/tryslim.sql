@@ -113,7 +113,7 @@ CREATE TABLE `test_users` (
   `time_created` datetime DEFAULT CURRENT_TIMESTAMP,
   `time_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +122,7 @@ CREATE TABLE `test_users` (
 
 LOCK TABLES `test_users` WRITE;
 /*!40000 ALTER TABLE `test_users` DISABLE KEYS */;
-INSERT INTO `test_users` VALUES (5,'admin1','admin1@mail.co','123','admin','2021-03-19 16:26:37','2021-03-19 09:26:37'),(6,'admin2','admin2@mail.co','321','admin','2021-03-19 16:39:19','2021-03-19 09:39:19');
+INSERT INTO `test_users` VALUES (9,'user1','user1@mail.co','123','user','2021-03-19 17:09:44','2021-03-19 10:09:44');
 /*!40000 ALTER TABLE `test_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-19 16:44:49
+-- Dump completed on 2021-03-19 17:10:16

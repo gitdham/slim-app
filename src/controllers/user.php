@@ -15,15 +15,17 @@ class User {
       return $res->withJson(["msg" => "registration fail"], 400);
     }
 
-    $inputValidation = array(
+    $inputValidation = [
       'username' => FILTER_SANITIZE_SPECIAL_CHARS,
       'username' => FILTER_SANITIZE_STRING,
       'email' => FILTER_SANITIZE_EMAIL,
       'email' => FILTER_VALIDATE_EMAIL,
       'password' => FILTER_DEFAULT,
-      'privilege' => FILTER_SANITIZE_SPECIAL_CHARS,
-      'privilege' => FILTER_SANITIZE_STRING
-    );
+      'privilege' => [
+        'filter' => FILTER_VALIDATE_REGEXP,
+        'options' => ['regexp' => "/^user$/"]
+      ]
+    ];
     $inputs = filter_var_array($inputs, $inputValidation);
 
     // if there was invalid input
@@ -32,12 +34,6 @@ class User {
       if (empty($val)) {
         $invalid_input[] = $input;
       }
-    }
-
-    // check if privilege invalid
-    $privileges = ['admin', 'user'];
-    if (!in_array($inputs['privilege'], $privileges)) {
-      $invalid_input[] = 'privilege';
     }
 
     // response if there was invalid input

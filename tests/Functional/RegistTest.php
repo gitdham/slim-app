@@ -3,14 +3,14 @@
 namespace Tests\Functional;
 
 class RegistTest extends BaseTestCase {
-  /** TEST REGIST ADMIN */
+  /** TEST REGIST USER */
   /** Test that the regist admmin return success*/
-  public function test_regist_admin_success() {
+  public function test_regist_user_success() {
     $regist_data = [
-      'username' => 'admin1',
-      'email' => 'admin1@mail.co',
+      'username' => 'user1',
+      'email' => 'user1@mail.co',
       'password' => '123',
-      'privilege' => 'admin'
+      'privilege' => 'user'
     ];
 
     $response = $this->runApp('POST', '/regist', $regist_data);
@@ -20,8 +20,8 @@ class RegistTest extends BaseTestCase {
     $this->assertEquals('registration success', $result['msg']);
   }
 
-  /** Test that the regist admin without data return fail*/
-  public function test_regist_admin_without_data_fail() {
+  /** Test that the regist user without data return fail*/
+  public function test_regist_user_without_data_fail() {
     $response = $this->runApp('POST', '/regist');
     $result = json_decode($response->getBody(), true);
 
@@ -29,13 +29,13 @@ class RegistTest extends BaseTestCase {
     $this->assertEquals('registration fail', $result['msg']);
   }
 
-  /** Test that the regist admin with exist username return fail */
-  public function test_regist_with_exist_username_fail() {
+  /** Test that the regist user with exist username return fail */
+  public function test_regist_user_with_exist_username_fail() {
     $regist_data = [
-      'username' => 'admin1',
-      'email' => 'admin2@mail.co',
+      'username' => 'user1',
+      'email' => 'user2@mail.co',
       'password' => '123',
-      'privilege' => 'admin'
+      'privilege' => 'user'
     ];
 
     $response = $this->runApp('POST', '/regist', $regist_data);
@@ -45,13 +45,13 @@ class RegistTest extends BaseTestCase {
     $this->assertEquals('registration fail. username already registered', $result['msg']);
   }
 
-  /** Test that the regist admin with exist email return fail */
-  public function test_regist_with_exist_email_fail() {
+  /** Test that the regist user with exist email return fail */
+  public function test_regist_user_with_exist_email_fail() {
     $regist_data = [
-      'username' => 'admin2',
-      'email' => 'admin1@mail.co',
+      'username' => 'user2',
+      'email' => 'user1@mail.co',
       'password' => '123',
-      'privilege' => 'admin'
+      'privilege' => 'user'
     ];
 
     $response = $this->runApp('POST', '/regist', $regist_data);
@@ -61,13 +61,13 @@ class RegistTest extends BaseTestCase {
     $this->assertEquals('registration fail. email already registered', $result['msg']);
   }
 
-  /** Test that the regist admin with invalid email return fail*/
-  public function test_regist_with_invalid_email_fail() {
+  /** Test that the regist user with invalid email return fail*/
+  public function test_regist_user_with_invalid_email_fail() {
     $regist_data = [
-      'username' => 'admin2',
-      'email' => 'admin1sdfwef',
+      'username' => 'user2',
+      'email' => 'user1sdfwef',
       'password' => '123',
-      'privilege' => 'admin'
+      'privilege' => 'user'
     ];
 
     $response = $this->runApp('POST', '/regist', $regist_data);
@@ -78,13 +78,13 @@ class RegistTest extends BaseTestCase {
     $this->assertArraySubset(['invalid_input' => ['email']], ['invalid_input' => ['email']]);
   }
 
-  /** Test that the regist admin with invalid privilege return fail */
-  public function test_regist_with_invalid_privilege_fail() {
+  /** Test that the regist user with invalid privilege return fail */
+  public function test_regist_user_with_invalid_privilege_fail() {
     $regist_data = [
-      'username' => 'admin2',
-      'email' => 'admin2@mail.co',
+      'username' => 'user2',
+      'email' => 'user2@mail.co',
       'password' => '123',
-      'privilege' => 'superadmin'
+      'privilege' => 'superuser'
     ];
 
     $response = $this->runApp('POST', '/regist', $regist_data);
