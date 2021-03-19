@@ -96,6 +96,61 @@ LOCK TABLES `test_products` WRITE;
 INSERT INTO `test_products` VALUES (1,'test post product',9999.00,'test_img.png','2021-03-19 09:32:44','2021-03-19 02:32:44'),(2,'test update product',8888.00,'updated_test_img.png','2021-03-19 09:32:53','2021-03-19 04:23:40');
 /*!40000 ALTER TABLE `test_products` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `test_users`
+--
+
+DROP TABLE IF EXISTS `test_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `test_users` (
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(15) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `password` varchar(200) DEFAULT NULL,
+  `privilege` enum('admin','user') DEFAULT NULL,
+  `time_created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `time_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `test_users`
+--
+
+LOCK TABLES `test_users` WRITE;
+/*!40000 ALTER TABLE `test_users` DISABLE KEYS */;
+INSERT INTO `test_users` VALUES (5,'admin1','admin1@mail.co','123','admin','2021-03-19 16:26:37','2021-03-19 09:26:37'),(6,'admin2','admin2@mail.co','321','admin','2021-03-19 16:39:19','2021-03-19 09:39:19');
+/*!40000 ALTER TABLE `test_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(15) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `password` varchar(200) DEFAULT NULL,
+  `privilege` enum('admin','user') DEFAULT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -106,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-19 11:26:21
+-- Dump completed on 2021-03-19 16:44:49
