@@ -35,9 +35,9 @@ class ProductTest extends BaseTestCase {
 
     // check value
     $this->assertEquals(1, $values['id']);
-    $this->assertEquals('barang1', $values['name']);
-    $this->assertEquals(789.00, $values['price']);
-    $this->assertEquals('gambar1.png', $values['img']);
+    $this->assertEquals('test post product', $values['name']);
+    $this->assertEquals(9999.00, $values['price']);
+    $this->assertEquals('test_img.png', $values['img']);
   }
 
   /**
