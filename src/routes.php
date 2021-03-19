@@ -4,6 +4,7 @@ use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use products\Product;
+use users\User;
 
 return function (App $app) {
 	$container = $app->getContainer();
@@ -27,6 +28,14 @@ return function (App $app) {
 		return 'about from post';
 	});
 
+	// REGISTRATION ROUTE
+	$app->post('/regist', function (Request $req, Response $res) use ($container) {
+		$result = User::registUser($req,  $res, $container);
+		return $result;
+	});
+
+
+	// CUSTOMER ROUTE
 	$app->get('/customers', function (Request $request, Response $response) use ($container) {
 		$db = $container->get('database');
 		$db->query("SELECT * FROM customers");
@@ -97,7 +106,8 @@ return function (App $app) {
 		}
 	});
 
-	// product rute
+
+	// PRODUCT ROUTE
 	$app->get('/product', function (Request $req, Response $res) use ($container) {
 		$result = Product::getProducts($req,  $res, $container);
 		return $result;

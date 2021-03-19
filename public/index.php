@@ -16,6 +16,7 @@ require __DIR__ . '/../src/database.php';
 
 // controllers
 require __DIR__ . '/../src/controllers/product.php';
+require __DIR__ . '/../src/controllers/user.php';
 
 session_start();
 

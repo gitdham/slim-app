@@ -3,7 +3,7 @@
 namespace products;
 
 class Product {
-	// GET PRODUCT
+	// GET PRODUCTS
 	public static function getProducts($req, $res, $container) {
 		$db = $container->get('database');
 		$db->query("SELECT * FROM test_products");
