@@ -16,7 +16,7 @@ class RegistTest extends BaseTestCase {
     $response = $this->runApp('POST', '/regist', $regist_data);
     $result = json_decode($response->getBody(), true);
 
-    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals(201, $response->getStatusCode());
     $this->assertEquals('registration success', $result['msg']);
   }
 
@@ -26,7 +26,7 @@ class RegistTest extends BaseTestCase {
     $result = json_decode($response->getBody(), true);
 
     $this->assertEquals(400, $response->getStatusCode());
-    $this->assertEquals('registration fail', $result['msg']);
+    $this->assertEquals('input invalid', $result['msg']);
   }
 
   /** Test that the regist user with exist username return fail */
@@ -76,22 +76,5 @@ class RegistTest extends BaseTestCase {
     $this->assertEquals(400, $response->getStatusCode());
     $this->assertEquals('input invalid', $result['msg']);
     $this->assertArraySubset(['invalid_input' => ['email']], ['invalid_input' => ['email']]);
-  }
-
-  /** Test that the regist user with invalid privilege return fail */
-  public function test_regist_user_with_invalid_privilege_fail() {
-    $regist_data = [
-      'username' => 'user2',
-      'email' => 'user2@mail.co',
-      'password' => '123',
-      'privilege' => 'superuser'
-    ];
-
-    $response = $this->runApp('POST', '/regist', $regist_data);
-    $result = json_decode($response->getBody(), true);
-
-    $this->assertEquals(400, $response->getStatusCode());
-    $this->assertEquals('input invalid', $result['msg']);
-    $this->assertArraySubset(['invalid_input' => ['privilege']], ['invalid_input' => ['privilege']]);
   }
 }

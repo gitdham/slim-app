@@ -35,6 +35,13 @@ return function (App $app) {
 	});
 
 
+	// LOGIN ROUTE
+	$app->post('/login', function (Request $req, Response $res) use ($container) {
+		$result = User::loginUser($req,  $res, $container);
+		return $result;
+	});
+
+
 	// CUSTOMER ROUTE
 	$app->get('/customers', function (Request $request, Response $response) use ($container) {
 		$db = $container->get('database');
