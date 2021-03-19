@@ -117,4 +117,9 @@ return function (App $app) {
 		$result = Product::updateProduct($req,  $res, $container);
 		return $result;
 	});
+
+	$app->delete('/product/{id}', function (Request $req, Response $res) use ($container) {
+		$result = Product::deleteProduct($req, $res, $container);
+		return $result;
+	});
 };

@@ -140,4 +140,30 @@ class Product {
 			return $res->withJson(["msg" => "update product fail"], 500);
 		}
 	}
+
+	// DELETE PRODUCT
+	public static function deleteProduct($req, $res, $container) {
+		$id = $req->getAttribute('id');
+
+		$product = self::selectProduct($req->withAttribute('id', $id), $res, $container);
+		$product = json_decode($product->getBody(), true);
+
+		if ($product['msg'] === 'product not found') {
+			return $res->withJson($product, 404);
+		}
+
+
+		$values = array($id);
+
+		$db = $container->get('database');
+		$db->query("DELETE FROM test_products WHERE id=?");
+		$db->bind('i', $values);
+		$db->execute();
+
+		if ($db->rowCount() > 0) {
+			return $res->withJson(["msg" => "delete product success"]);
+		} else {
+			return $res->withJson(["msg" => "delete product fail"], 500);
+		}
+	}
 }

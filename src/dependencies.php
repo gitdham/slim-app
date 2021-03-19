@@ -26,7 +26,7 @@ return function (App $app) {
 	// database
 	$container['database'] = function ($c) {
 		$settings = $c->get('settings')['database'];
-		$db = new Database($settings['host'], $settings['username'], $settings['password'], $settings['database']);
+		$db = new Database($settings['host'], $settings['username'], $settings['password'], $settings['database'], $settings['port']);
 
 		return $db;
 	};

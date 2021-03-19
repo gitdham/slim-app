@@ -77,14 +77,14 @@ DROP TABLE IF EXISTS `test_products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `test_products` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL DEFAULT '3',
   `name` varchar(100) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `img` varchar(50) DEFAULT NULL,
   `time_created` datetime DEFAULT CURRENT_TIMESTAMP,
   `time_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `test_products` (
 
 LOCK TABLES `test_products` WRITE;
 /*!40000 ALTER TABLE `test_products` DISABLE KEYS */;
-INSERT INTO `test_products` VALUES (1,'barang1',789.00,'gambar1.png','2021-03-18 14:09:56','2021-03-18 10:06:08'),(2,'test update product',8888.00,'updated_test_img.png','2021-03-18 14:09:56','2021-03-18 10:06:49'),(3,'test product',9999.00,'test_img.png','0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,'test product',9999.00,'test_img.png','2021-03-18 14:18:22','2021-03-18 07:18:22'),(5,'test product',9999.00,'test_img.png','2021-03-18 14:18:35','2021-03-18 07:18:35'),(6,'test product',9999.00,'test_img.png','2021-03-18 14:26:44','2021-03-18 07:26:44'),(7,'test post product',9999.00,'test_img.png','2021-03-18 14:32:42','2021-03-18 07:32:42'),(8,'test post product',9999.00,'test_img.png','2021-03-18 17:01:12','2021-03-18 10:01:12'),(9,'test post product',9999.00,'test_img.png','2021-03-18 17:06:49','2021-03-18 10:06:49'),(10,'test post product',9999.00,'test_img.png','2021-03-18 17:06:58','2021-03-18 10:06:58'),(11,'test post product',9999.00,'test_img.png','2021-03-18 17:09:16','2021-03-18 10:09:16'),(12,'test post product',9999.00,'test_img.png','2021-03-18 17:10:37','2021-03-18 10:10:37'),(13,'test post product',9999.00,'test_img.png','2021-03-18 17:12:34','2021-03-18 10:12:34');
+INSERT INTO `test_products` VALUES (1,'test post product',9999.00,'test_img.png','2021-03-19 09:32:44','2021-03-19 02:32:44'),(2,'test update product',8888.00,'updated_test_img.png','2021-03-19 09:32:53','2021-03-19 04:23:40');
 /*!40000 ALTER TABLE `test_products` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -106,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-18 17:12:46
+-- Dump completed on 2021-03-19 11:26:21

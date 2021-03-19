@@ -6,16 +6,19 @@ class Database {
   private $username;
   private $password;
   private $database;
+  private $port;
   private $mysqli;
   private $stmt;
 
-  public function __construct($host, $username, $password, $database) {
+  public function __construct($host, $username, $password, $database, $port) {
     $this->host = $host;
     $this->username = $username;
     $this->password = $password;
     $this->database = $database;
+    $this->port = $port;
 
-    $this->mysqli = new mysqli($this->host, $this->username, $this->password, $this->database);
+    $this->mysqli = mysqli_init();
+    $this->mysqli->real_connect($this->host, $this->username, $this->password, $this->database, $this->port, null, MYSQLI_CLIENT_FOUND_ROWS);
     if ($this->mysqli->connect_errno) {
       echo "Failed to connect to MySQL: " . $this->mysqli->connect_error;
       die;

@@ -73,7 +73,7 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the post route without data return fail
    */
-  public function test_post_product_without_data() {
+  public function test_post_product_without_data_fail() {
     $response = $this->runApp('POST', '/product');
 
     $this->assertEquals(400, $response->getStatusCode());
@@ -83,7 +83,7 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the post route without img return fail
    */
-  public function test_post_product_without_image() {
+  public function test_post_product_without_image_fail() {
     $post_data = [
       'name' => 'test post product',
       // 'price' => 9999
@@ -101,7 +101,7 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the post route without price return fail
    */
-  public function test_post_product_without_price() {
+  public function test_post_product_without_price_fail() {
     $post_data = [
       'name' => 'test post product',
       // 'price' => 9999
@@ -119,7 +119,7 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the post route with invalid price return fail
    */
-  public function test_post_product_with_invalid_price() {
+  public function test_post_product_with_invalid_price_fail() {
     $post_data = [
       'name' => 'test post product',
       'price' => 'aswqwerty',   //price must decimal number
@@ -137,7 +137,7 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the post route without name return fail
    */
-  public function test_post_product_without_name() {
+  public function test_post_product_without_name_fail() {
     $post_data = [
       // 'name' => 'test post product',
       'price' => 9999,
@@ -159,24 +159,41 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the put route return success
    */
-  // public function test_put_product_success() {
-  //   $put_data = [
-  //     'id' => 2,
-  //     'name' => 'test update product',
-  //     'price' => 8888,
-  //     'img' => 'updated_test_img.png'
-  //   ];
+  public function test_put_product_success() {
+    $put_data = [
+      'id' => 2,
+      'name' => 'test update product',
+      'price' => 8888,
+      'img' => 'updated_test_img.png'
+    ];
 
-  //   $response = $this->runApp('PUT', '/product', $put_data);
+    $response = $this->runApp('PUT', '/product', $put_data);
 
-  //   $this->assertEquals(201, $response->getStatusCode());
-  //   $this->assertContains('update product success', json_decode($response->getBody(), true));
-  // }
+    $this->assertEquals(201, $response->getStatusCode());
+    $this->assertContains('update product success', json_decode($response->getBody(), true));
+  }
+
+  /**
+   * Test that the update non existed product return fail
+   */
+  public function test_put_product_with_unexisted_id_fail() {
+    $put_data = [
+      'id' => 9999999,
+      'name' => 'test update product',
+      'price' => 8888,
+      'img' => 'updated_test_img.png'
+    ];
+
+    $response = $this->runApp('PUT', '/product', $put_data);
+
+    $this->assertEquals(404, $response->getStatusCode());
+    $this->assertContains('product not found', json_decode($response->getBody(), true));
+  }
 
   /**
    * Test that the put route without data return fail
    */
-  public function test_put_product_without_data() {
+  public function test_put_product_without_data_fail() {
     $response = $this->runApp('PUT', '/product');
 
     $this->assertEquals(400, $response->getStatusCode());
@@ -186,7 +203,7 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the put route without id return fail
    */
-  public function test_put_product_without_id() {
+  public function test_put_product_without_id_fail() {
     $put_data = [
       // 'id' => 2,
       'name' => 'test update product',
@@ -205,7 +222,7 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the put route with invalid id return fail
    */
-  public function test_put_product_with_invalid_id() {
+  public function test_put_product_with_invalid_id_fail() {
     $put_data = [
       'id' => 'asd',
       'name' => 'test update product',
@@ -224,7 +241,7 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the put route without img return fail
    */
-  public function test_put_product_without_image() {
+  public function test_put_product_without_image_fail() {
     $put_data = [
       'id' => 2,
       'name' => 'test update product',
@@ -243,7 +260,7 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the put route without price return fail
    */
-  public function test_put_product_without_price() {
+  public function test_put_product_without_price_fail() {
     $put_data = [
       'id' => 2,
       'name' => 'test update product',
@@ -262,7 +279,7 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the put route with invalid price return fail
    */
-  public function test_put_product_with_invalid_price() {
+  public function test_put_product_with_invalid_price_fail() {
     $put_data = [
       'id' => 2,
       'name' => 'test update product',
@@ -281,7 +298,7 @@ class ProductTest extends BaseTestCase {
   /**
    * Test that the put route without name return fail
    */
-  public function test_put_product_without_name() {
+  public function test_put_product_without_name_fail() {
     $put_data = [
       'id' => 2,
       // 'name' => 'test update product',
@@ -295,5 +312,29 @@ class ProductTest extends BaseTestCase {
     $this->assertEquals(400, $response->getStatusCode());
     $this->assertEquals('input invalid', $result['msg']);
     $this->assertArraySubset(['invalid_input' => ['name']], ['invalid_input' => ['name']]);
+  }
+
+
+
+  /** DELETE PRODUCT ROUTE */
+  /**
+   * Test that the delete product success
+   */
+  public function test_delete_product_success() {
+    $response = $this->runApp('DELETE', '/product/3');
+    $result = json_decode($response->getBody(), true);
+
+    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals('delete product success', $result['msg']);
+  }
+
+  /**
+   * Test that the delete non existed product return fail
+   */
+  public function test_delete_product_with_unexisted_id_fail() {
+    $response = $this->runApp('DELETE', '/product/999999');
+
+    $this->assertEquals(404, $response->getStatusCode());
+    $this->assertContains('product not found', json_decode($response->getBody(), true));
   }
 }

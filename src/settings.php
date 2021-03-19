@@ -21,7 +21,8 @@ return [
 			'host' => 'localhost',
 			'username' => 'root',
 			'password' => '',
-			'database' => 'tryslim'
+			'database' => 'tryslim',
+			'port' => '3306',
 		]
 	],
 ];
