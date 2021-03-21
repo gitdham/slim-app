@@ -19,8 +19,9 @@ class User {
 
     // set username to lowercase & hashing
     $inputs['username'] = strtolower($inputs['username']);
-    $inputs['password'] = password_hash($inputs['username'], PASSWORD_DEFAULT);
+    $inputs['password'] = password_hash($inputs['password'], PASSWORD_DEFAULT);
     $inputs['reg_hash'] = hash('sha256', rand());
+
 
     $inputValidation = [
       'username' => FILTER_SANITIZE_SPECIAL_CHARS,
@@ -48,10 +49,11 @@ class User {
       ], 400);
     }
 
+
     // check existed username
-    $values = array($inputs['username']);
+    $username = array($inputs['username']);
     $db->query("SELECT username FROM test_users WHERE username=?");
-    $db->bind('s', $values);
+    $db->bind('s', $username);
     $db->execute();
 
     $user = $db->single();
@@ -60,9 +62,9 @@ class User {
     }
 
     // check existed email
-    $values = array($inputs['email']);
+    $email = array($inputs['email']);
     $db->query("SELECT email FROM test_users WHERE email=?");
-    $db->bind('s', $values);
+    $db->bind('s', $email);
     $db->execute();
 
     $email = $db->single();
@@ -98,8 +100,6 @@ class User {
     $inputValidation = [
       'username' => FILTER_SANITIZE_SPECIAL_CHARS,
       'username' => FILTER_SANITIZE_STRING,
-      'email' => FILTER_SANITIZE_EMAIL,
-      'email' => FILTER_VALIDATE_EMAIL,
       'password' => FILTER_DEFAULT,
     ];
     $inputs = filter_var_array($inputs, $inputValidation);
@@ -121,25 +121,22 @@ class User {
     }
 
     // check existed username
-    $values = array($inputs['username']);
-    $db->query("SELECT username FROM test_users WHERE username=?");
-    $db->bind('s', $values);
+    $username = array($inputs['username']);
+    $db->query("SELECT username, password, privilege FROM test_users WHERE username=?");
+    $db->bind('s', $username);
     $db->execute();
 
     $user = $db->single();
+    // if username not found
     if (is_null($user)) {
-      return $res->withJson(['msg' => 'username not found/registered'], 404);
+      return $res->withJson(['msg' => 'login fail. username not found/registered'], 404);
     }
 
-    // check existed email
-    $values = array($inputs['email']);
-    $db->query("SELECT email FROM test_users WHERE email=?");
-    $db->bind('s', $values);
-    $db->execute();
-
-    $email = $db->single();
-    if (is_null($email)) {
-      return $res->withJson(['msg' => 'email not found/registered'], 404);
+    // if password not match
+    if (!password_verify($inputs['password'], $user['password'])) {
+      return $res->withJson(['msg' => 'login fail. password not match'], 401);
+    } else {
+      return $res->withJson(['msg' => 'login success. password match']);
     }
   }
 }

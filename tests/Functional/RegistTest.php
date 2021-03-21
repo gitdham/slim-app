@@ -10,7 +10,6 @@ class RegistTest extends BaseTestCase {
       'username' => 'user1',
       'email' => 'user1@mail.co',
       'password' => '123',
-      'privilege' => 'user'
     ];
 
     $response = $this->runApp('POST', '/regist', $regist_data);
@@ -35,7 +34,6 @@ class RegistTest extends BaseTestCase {
       'username' => 'user1',
       'email' => 'user2@mail.co',
       'password' => '123',
-      'privilege' => 'user'
     ];
 
     $response = $this->runApp('POST', '/regist', $regist_data);
@@ -51,7 +49,6 @@ class RegistTest extends BaseTestCase {
       'username' => 'user2',
       'email' => 'user1@mail.co',
       'password' => '123',
-      'privilege' => 'user'
     ];
 
     $response = $this->runApp('POST', '/regist', $regist_data);
@@ -67,7 +64,6 @@ class RegistTest extends BaseTestCase {
       'username' => 'user2',
       'email' => 'user1sdfwef',
       'password' => '123',
-      'privilege' => 'user'
     ];
 
     $response = $this->runApp('POST', '/regist', $regist_data);

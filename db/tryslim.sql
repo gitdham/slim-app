@@ -1,13 +1,13 @@
--- MySQL dump 10.16  Distrib 10.1.37-MariaDB, for Win32 (AMD64)
+-- MariaDB dump 10.17  Distrib 10.4.11-MariaDB, for Win64 (AMD64)
 --
 -- Host: localhost    Database: tryslim
 -- ------------------------------------------------------
--- Server version	10.1.37-MariaDB
+-- Server version	10.4.11-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -28,7 +28,7 @@ CREATE TABLE `customers` (
   `last_name` varchar(100) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `phone` varchar(14) DEFAULT NULL,
-  `address` text,
+  `address` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -77,12 +77,12 @@ DROP TABLE IF EXISTS `test_products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `test_products` (
-  `id` int(11) NOT NULL DEFAULT '3',
+  `id` int(11) NOT NULL DEFAULT 3,
   `name` varchar(100) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `img` varchar(50) DEFAULT NULL,
-  `time_created` datetime DEFAULT CURRENT_TIMESTAMP,
-  `time_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `time_created` datetime DEFAULT current_timestamp(),
+  `time_modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -109,11 +109,12 @@ CREATE TABLE `test_users` (
   `username` varchar(15) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `password` varchar(200) DEFAULT NULL,
-  `privilege` enum('admin','user') DEFAULT NULL,
-  `time_created` datetime DEFAULT CURRENT_TIMESTAMP,
-  `time_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `reg_hash` varchar(200) DEFAULT NULL,
+  `privilege` enum('admin','user') DEFAULT 'user',
+  `time_created` datetime DEFAULT current_timestamp(),
+  `time_modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +123,7 @@ CREATE TABLE `test_users` (
 
 LOCK TABLES `test_users` WRITE;
 /*!40000 ALTER TABLE `test_users` DISABLE KEYS */;
-INSERT INTO `test_users` VALUES (9,'user1','user1@mail.co','123','user','2021-03-19 17:09:44','2021-03-19 10:09:44');
+INSERT INTO `test_users` VALUES (16,'user1','user1@mail.co','$2y$10$vsrNvRJLuW.UFGR3vBTodeSKsdyiQb2MKYqXvQxowptEC/JhJZZOO','287af943ec32b380a297c2617c65cba34d73cb5abb01b715e7c6e58595808517','user','2021-03-21 21:15:29','2021-03-21 14:15:29');
 /*!40000 ALTER TABLE `test_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-19 17:10:16
+-- Dump completed on 2021-03-21 22:34:52
