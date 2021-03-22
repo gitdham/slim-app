@@ -12,7 +12,7 @@ class RegistTest extends BaseTestCase {
       'password' => '123',
     ];
 
-    $response = $this->runApp('POST', '/regist', $regist_data);
+    $response = $this->runApp('POST', '/user/regist', $regist_data);
     $result = json_decode($response->getBody(), true);
 
     $this->assertEquals(201, $response->getStatusCode());
@@ -21,7 +21,7 @@ class RegistTest extends BaseTestCase {
 
   /** Test that the regist user without data return fail*/
   public function test_regist_user_without_data_fail() {
-    $response = $this->runApp('POST', '/regist');
+    $response = $this->runApp('POST', '/user/regist');
     $result = json_decode($response->getBody(), true);
 
     $this->assertEquals(400, $response->getStatusCode());
@@ -36,7 +36,7 @@ class RegistTest extends BaseTestCase {
       'password' => '123',
     ];
 
-    $response = $this->runApp('POST', '/regist', $regist_data);
+    $response = $this->runApp('POST', '/user/regist', $regist_data);
     $result = json_decode($response->getBody(), true);
 
     $this->assertEquals(409, $response->getStatusCode());
@@ -51,7 +51,7 @@ class RegistTest extends BaseTestCase {
       'password' => '123',
     ];
 
-    $response = $this->runApp('POST', '/regist', $regist_data);
+    $response = $this->runApp('POST', '/user/regist', $regist_data);
     $result = json_decode($response->getBody(), true);
 
     $this->assertEquals(409, $response->getStatusCode());
@@ -66,7 +66,7 @@ class RegistTest extends BaseTestCase {
       'password' => '123',
     ];
 
-    $response = $this->runApp('POST', '/regist', $regist_data);
+    $response = $this->runApp('POST', '/user/regist', $regist_data);
     $result = json_decode($response->getBody(), true);
 
     $this->assertEquals(400, $response->getStatusCode());

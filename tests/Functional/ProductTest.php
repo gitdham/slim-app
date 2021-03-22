@@ -9,7 +9,7 @@ class ProductTest extends BaseTestCase {
    * Test that the get route return all products data
    */
   public function test_get_all_products() {
-    $response = $this->runApp('GET', '/product');
+    $response = $this->runApp('GET', '/products');
     $data = json_decode($response->getBody(), true)[0];
 
     $this->assertEquals(200, $response->getStatusCode());

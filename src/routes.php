@@ -29,14 +29,14 @@ return function (App $app) {
 	});
 
 	// REGISTRATION ROUTE
-	$app->post('/regist', function (Request $req, Response $res) use ($container) {
+	$app->post('/user/regist', function (Request $req, Response $res) use ($container) {
 		$result = User::registUser($req,  $res, $container);
 		return $result;
 	});
 
 
 	// LOGIN ROUTE
-	$app->post('/login', function (Request $req, Response $res) use ($container) {
+	$app->post('/user/login', function (Request $req, Response $res) use ($container) {
 		$result = User::loginUser($req,  $res, $container);
 		return $result;
 	});
@@ -67,7 +67,7 @@ return function (App $app) {
 		}
 	});
 
-	$app->post('/customers', function (Request $request, Response $response) use ($container) {
+	$app->post('/customer', function (Request $request, Response $response) use ($container) {
 		$inputs = $request->getParsedBody();
 		if (!isset($inputs)) {
 			return $response->withJson(["msg" => "Insert customer fail"], 400);
@@ -115,7 +115,7 @@ return function (App $app) {
 
 
 	// PRODUCT ROUTE
-	$app->get('/product', function (Request $req, Response $res) use ($container) {
+	$app->get('/products', function (Request $req, Response $res) use ($container) {
 		$result = Product::getProducts($req,  $res, $container);
 		return $result;
 	});

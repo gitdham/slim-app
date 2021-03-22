@@ -2,8 +2,6 @@
 
 namespace users;
 
-use \Firebase\JWT\JWT;
-
 class User {
   // GET USERS
 
