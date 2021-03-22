@@ -23,6 +23,11 @@ return [
 			'password' => '',
 			'database' => 'tryslim',
 			'port' => '3306',
+		],
+
+		// JWT
+		'jwt' => [
+			'key' => 'supersecrectkey'
 		]
 	],
 ];

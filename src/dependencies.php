@@ -30,4 +30,9 @@ return function (App $app) {
 
 		return $db;
 	};
+
+	// jwt key
+	// $container['jwt_key'] = function ($c) {
+	// 	$settings = $c->get('settings')['jwt'];
+	// };
 };
