@@ -3,12 +3,11 @@
 use Slim\App;
 
 return function (App $app) {
-	// $app->add(function ($request, $response, $next) {
-	// 	$request = $request->withAttribute('lastname', 'adzani');
-	// 	$response->getBody()->write('BEFORE');
-	// 	$response = $next($request, $response);
-	// 	$response->getBody()->write('AFTER');
-
-	// 	return $response;
-	// });
+	$app->add(function ($req, $res, $next) {
+		$response = $next($req, $res);
+		return $response
+			->withHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500')
+			->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+			->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+	});
 };
