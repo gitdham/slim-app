@@ -153,16 +153,12 @@ class User {
     ];
 
     $jwt = JWT::encode($payload, $key);
-    $jwt_decoded = JWT::decode($jwt, $key, ['HS256']);
-    var_dump($payload);
-    var_dump($jwt);
-    var_dump($jwt_decoded);
-    die;
+    // $jwt_decoded = JWT::decode($jwt, $key, ['HS256']);
 
-    // return $res->withJson([
-    //   'msg' => 'login success',
-    //   'jwt' => $jwt,
-    //   'expireAt' => $expire_claim
-    // ]);
+    return $res->withJson([
+      'msg' => 'login success',
+      'jwt' => $jwt,
+      'expires' => $exp
+    ]);
   }
 }
