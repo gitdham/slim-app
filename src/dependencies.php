@@ -27,12 +27,18 @@ return function (App $app) {
 	$container['database'] = function ($c) {
 		$settings = $c->get('settings')['database'];
 		$db = new Database($settings['host'], $settings['username'], $settings['password'], $settings['database'], $settings['port']);
-
 		return $db;
 	};
 
 	// jwt key
-	// $container['jwt_key'] = function ($c) {
-	// 	$settings = $c->get('settings')['jwt'];
-	// };
+	$container['JWT_ACCESS_TOKEN_SECRET_KEY'] = function ($c) {
+		$settings = $c->get('settings')['JWT_SECRET'];
+		$access_token_secret = $settings['ACCESS_TOKEN_SECRET'];
+		return $access_token_secret;
+	};
+	$container['JWT_REFRESH_TOKEN_SECRET_KEY'] = function ($c) {
+		$settings = $c->get('settings')['JWT_SECRET'];
+		$refresh_token_secret = $settings['REFRESH_TOKEN_SECRET'];
+		return $refresh_token_secret;
+	};
 };

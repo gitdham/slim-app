@@ -141,28 +141,23 @@ class User {
     // unset password from $user
     unset($user['password']);
 
-    $key = 'privatekey';
+    $secret_key = $container->get('JWT_ACCESS_TOKEN_SECRET_KEY');
     $iat = time();
     $exp = $iat + 60 * 60;
     $payload = [
-      'iss' => 'http://localhost:8080',
-      'aud' => 'http://localhost:8080',
+      // 'iss' => 'http://localhost:8080',
+      // 'aud' => 'http://localhost:8080',
       'iat' => $iat,
       'exp' => $exp,
       'data' => $user
     ];
 
-    $jwt = JWT::encode($payload, $key);
-    $jwt_decoded = JWT::decode($jwt, $key, ['HS256']);
-    var_dump($payload);
-    var_dump($jwt);
-    var_dump($jwt_decoded);
-    die;
+    $jwt = JWT::encode($payload, $secret_key);
 
-    // return $res->withJson([
-    //   'msg' => 'login success',
-    //   'jwt' => $jwt,
-    //   'expireAt' => $expire_claim
-    // ]);
+    return $res->withJson([
+      'msg' => 'login success',
+      'jwt' => $jwt,
+      'expires' => $exp
+    ]);
   }
 }

@@ -26,8 +26,9 @@ return [
 		],
 
 		// JWT
-		'jwt' => [
-			'key' => 'supersecrectkey'
+		'JWT_SECRET' => [
+			'ACCESS_TOKEN_SECRET' => '627f6ccff17ac7b9c8f2688ebbd4befe860b286453b8c5a44a7117b553ad0efa8451d3be0631152f11e9bde07f193012a4867d1c80d78a624bd6d65c5f088c45',
+			'REFRESH_TOKEN_SECRET' => 'cb3338dc681da7fe4ac86360df2cc49fadf111dffe4ad74a58819046742ce3ac8d963b9c1152313629e19a3c36bb8705dba25659e39c08d76e4a92a0c62e5fd5'
 		]
 	],
 ];
