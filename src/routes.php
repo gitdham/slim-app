@@ -42,6 +42,37 @@ return function (App $app) {
 		return $result;
 	});
 
+	// REFRESH TOKEN ROUTE
+	$app->post('/token', function (Request $req, Response $res) use ($container) {
+		$refresh_tokens = ['eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwicHJpdmlsZWdlIjoidXNlciJ9.g7pfm4sigeUXTGL6Bk1JmmuIXAVZi-nUOONkLxD-olg'];
+
+		if (is_null($req->getParsedBody())) {
+			return $res->withStatus(401);
+		}
+
+		// if (!in_array('refresh_token',  $req->getParsedBody())) {
+		// 	return $res->withStatus(403);
+		// }
+
+		$refresh_token = $req->getParsedBody()['refresh_token'];
+
+		if (!in_array($refresh_token,  $refresh_tokens)) {
+			echo 'not match';
+		}
+
+		$secret_refresh_key = $container->get('JWT_REFRESH_TOKEN_SECRET_KEY');
+
+		try {
+			$jwt_decoded = JWT::decode($refresh_token, $secret_refresh_key, ['HS256']);
+			$user = json_decode(json_encode($jwt_decoded), true);
+			$access_token = User::generateAccessToken($user, $container);
+
+			return $res->withJson(['access_token' => $access_token]);
+		} catch (UnexpectedValueException $err) {
+			return $res->withJson(['error' => $err->getMessage()], 401);
+		}
+	});
+
 	// User Auth Middleware
 	$user_auth = function ($req, $res, $next) use ($container) {
 		$headers = $req->getHeaders();

@@ -140,10 +140,22 @@ class User {
 
     // unset password from $user
     unset($user['password']);
+    $secret_refresh_key = $container->get('JWT_REFRESH_TOKEN_SECRET_KEY');
 
-    $secret_key = $container->get('JWT_ACCESS_TOKEN_SECRET_KEY');
+    $access_token = self::generateAccessToken($user, $container);
+    $refresh_token = JWT::encode($user, $secret_refresh_key);
+
+    return $res->withJson([
+      'msg' => 'login success',
+      'access_token' => $access_token,
+      'refresh_token' => $refresh_token
+    ]);
+  }
+
+  public static function generateAccessToken($user, $container) {
+    $secret_access_key = $container->get('JWT_ACCESS_TOKEN_SECRET_KEY');
     $iat = time();
-    $exp = $iat + 60 * 60;
+    $exp = $iat + 30;
     $payload = [
       // 'iss' => 'http://localhost:8080',
       // 'aud' => 'http://localhost:8080',
@@ -152,12 +164,6 @@ class User {
       'data' => $user
     ];
 
-    $jwt = JWT::encode($payload, $secret_key);
-
-    return $res->withJson([
-      'msg' => 'login success',
-      'jwt' => $jwt,
-      'expires' => $exp
-    ]);
+    return JWT::encode($payload, $secret_access_key);
   }
 }
