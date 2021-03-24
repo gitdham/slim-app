@@ -152,13 +152,37 @@ class User {
     ]);
   }
 
-  public static function generateAccessToken($user, $container) {
+  // REFRESH ACCESS TOKEN
+  public static function refreshToken($req, $res, $container) {
+    $refresh_tokens = ['eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwicHJpdmlsZWdlIjoidXNlciJ9.g7pfm4sigeUXTGL6Bk1JmmuIXAVZi-nUOONkLxD-olg'];
+
+    if (is_null($req->getParsedBody())) {
+      return $res->withStatus(401);
+    }
+
+    $refresh_token = $req->getParsedBody()['refresh_token'];
+
+    if (!in_array($refresh_token,  $refresh_tokens)) {
+      return $res->withJson(['error' => 'refresh token invalid'], 401);
+    }
+
+    $secret_refresh_key = $container->get('JWT_REFRESH_TOKEN_SECRET_KEY');
+
+    $jwt_decoded = JWT::decode($refresh_token, $secret_refresh_key, ['HS256']);
+    $user = json_decode(json_encode($jwt_decoded), true);
+    $access_token = self::generateAccessToken($user, $container);
+
+    return $res->withJson(['access_token' => $access_token]);
+  }
+
+  // GENERATE ACCESS TOKEN
+  private static function generateAccessToken($user, $container) {
     $secret_access_key = $container->get('JWT_ACCESS_TOKEN_SECRET_KEY');
     $iat = time();
-    $exp = $iat + 30;
+    $exp = $iat + 60 * 60;
     $payload = [
       // 'iss' => 'http://localhost:8080',
-      // 'aud' => 'http://localhost:8080',
+      // 'aud' => 'http://127.0.0.1:5500',
       'iat' => $iat,
       'exp' => $exp,
       'data' => $user

@@ -4,21 +4,21 @@ namespace Tests\Functional;
 
 class LoginTest extends BaseTestCase {
   /** TEST LOGIN USER */
-  /** Test that the regist admmin return success*/
-  // public function test_regist_user_success() {
-  //   $regist_data = [
-  //     'username' => 'user1',
-  //     'email' => 'user1@mail.co',
-  //     'password' => '123',
-  //     'privilege' => 'user'
-  //   ];
+  /** Test that the login user return success*/
+  public function test_login_user_success() {
+    $login_data = [
+      'username' => 'user1',
+      'password' => '123',
+    ];
 
-  //   $response = $this->runApp('POST', '/regist', $regist_data);
-  //   $result = json_decode($response->getBody(), true);
+    $response = $this->runApp('POST', '/user/login', $login_data);
+    $result = json_decode($response->getBody(), true);
 
-  //   $this->assertEquals(201, $response->getStatusCode());
-  //   $this->assertEquals('registration success', $result['msg']);
-  // }
+    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals('registration success', $result['msg']);
+    $this->assertArrayHasKey('access_token', $result);
+    $this->assertArrayHasKey('refresh_token', $result);
+  }
 
   /** Test that the login user without data return fail*/
   public function test_login_user_without_data_fail() {
