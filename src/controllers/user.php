@@ -119,7 +119,7 @@ class User {
     $body = '
       <p>Hi ' . $full_name . ',</p>
       <p>Terima kasih sudah registrasi sebagai user dengan username ' . $username . '. Silahkan click tombol di bawah ini untuk menyelesaikan registrasi akun anda.</p>
-      <a href="localhost:8080/user/regist/verification?email=' . $email . '&hash=' . $hash . '" style="-webkit-border-radius: 28;
+      <a href="http://localhost:8080/user/regist/verification?email=' . $email . '&hash=' . $hash . '" style="-webkit-border-radius: 28;
       -moz-border-radius: 28;
       border-radius: 28px;
       font-family: Arial;
@@ -127,14 +127,14 @@ class User {
       font-size: 20px;
       background: #3498db;
       padding: 10px 20px 10px 20px;
-      text-decoration: none;">Verify Now</a>
+      text-decoration: none;" target="_blank">Verify Now</a>
       <br><br>
       <p>Click/copy link berikut apabila tombol diatas tidak berfungsi</p>
-      <a href="localhost:8080/user/regist/verification?email=' . $email . '&hash=' . $hash . '">localhost:8080/user/regist/verification?email=' . $email . '&hash=' . $hash . '</a>
+      <a href="http://localhost:8080/user/regist/verification?email=' . $email . '&hash=' . $hash . '" target="_blank">localhost:8080/user/regist/verification?email=' . $email . '&hash=' . $hash . '</a>
     ';
 
     $alt_body = "
-    Hi {$full_name}, Terima kasih sudah registrasi sebagai user dengan username {$username}. Silahkan click link berikut untuk menyelesaikan registrasi akun anda. localhost:8080/user/regist/verification?email={$email}&hash={$hash}
+    Hi {$full_name}, Terima kasih sudah registrasi sebagai user dengan username {$username}. Silahkan click/copy link berikut untuk menyelesaikan registrasi akun anda. http://localhost:8080/user/regist/verification?email={$email}&hash={$hash}
     ";
 
     // sent mail
