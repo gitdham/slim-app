@@ -15,10 +15,9 @@ class RegistTest extends BaseTestCase {
 
     $response = $this->runApp('POST', '/user/regist', $regist_data);
     $result = json_decode($response->getBody(), true);
-    var_dump($result);
 
     $this->assertEquals(201, $response->getStatusCode());
-    $this->assertEquals('registration success. check your email verification', $result['msg']);
+    $this->assertEquals('registration success. check your email for verification', $result['msg']);
   }
 
   /** Test that the regist user without data return fail*/
@@ -80,7 +79,11 @@ class RegistTest extends BaseTestCase {
   }
 
   /** Test that the email verification & activation user success*/
-  // public function test_email_verification_success(){
-  //   $response = $this->runApp('GET', '/user/regist', $regist_data);
-  // }
+  public function test_email_verification_success() {
+    $response = $this->runApp('GET', '/user/regist/verification?email=twjbmfapmnvdcjrpgd@upived.online&hash=826f862770aef774fa547c303776a44876e9dbadda35104a22f24afaa16e167e');
+    $result = json_decode($response->getBody(), true);
+
+    $this->assertEquals(201, $response->getStatusCode());
+    $this->assertEquals('activation success', $result['msg']);
+  }
 }

@@ -4,6 +4,8 @@ namespace Tests\Functional;
 
 // database
 require __DIR__ . '/../../src/database.php';
+// mail
+require __DIR__ . '/../../src/mail.php';
 // controllers
 require __DIR__ . '/../../src/controllers/product.php';
 require __DIR__ . '/../../src/controllers/user.php';
