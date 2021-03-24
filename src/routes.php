@@ -23,9 +23,14 @@ return function (App $app) {
 		return "about page";
 	});
 
+	$aboutMiddle = function ($req, $res, $next) {
+		echo 'about middleware';
+		return $res = $next($req, $res);
+	};
+
 	$app->post('/about', function (Request $request, Response $response) {
-		return 'about from post';
-	});
+		return "about from post\n";
+	})->add($aboutMiddle);
 
 	// REGISTRATION ROUTE
 	$app->post('/user/regist', function (Request $req, Response $res) use ($container) {
@@ -33,6 +38,10 @@ return function (App $app) {
 		return $result;
 	});
 
+	// USER ACTIVATION ROUTE
+	$app->get('/user/regist/verification', function (Request $req, Response $res) use ($container) {
+		return User::userVerification($req, $res, $container);
+	});
 
 	// LOGIN ROUTE
 	$app->post('/user/login', function (Request $req, Response $res) use ($container) {
@@ -69,78 +78,6 @@ return function (App $app) {
 
 	// API ROUTE
 	$app->group('/api', function () use ($app, $container) {
-		// CUSTOMER ROUTE
-		$app->get('/customers', function (Request $request, Response $response) use ($container) {
-			$db = $container->get('database');
-			$db->query("SELECT * FROM customers");
-			$customers = $db->resultSet();
-			return $response->withJson($customers);
-		});
-
-		$app->get('/customer/{id}', function (Request $request, Response $response) use ($container) {
-			$id = $request->getAttribute('id');
-			$values = array($id);
-
-			$db = $container->get('database');
-			$db->query("SELECT * FROM customers WHERE id=?");
-			$db->bind('i', $values);
-			$db->execute();
-
-			$customer = $db->single();
-			if (!is_null($customer)) {
-				return $response->withJson($customer);
-			} else {
-				return $response->withJson(['msg' => 'customer not found'], 404);
-			}
-		});
-
-		$app->post('/customer', function (Request $request, Response $response) use ($container) {
-			$inputs = $request->getParsedBody();
-			if (!isset($inputs)) {
-				return $response->withJson(["msg" => "Insert customer fail"], 400);
-			}
-
-			$inputValidation = array(
-				'first_name' => FILTER_SANITIZE_SPECIAL_CHARS,
-				'first_name' => FILTER_SANITIZE_STRING,
-				'last_name' => FILTER_SANITIZE_SPECIAL_CHARS,
-				'last_name' => FILTER_SANITIZE_STRING,
-				'email' => FILTER_SANITIZE_SPECIAL_CHARS,
-				'email' => FILTER_VALIDATE_EMAIL,
-				'phone' => FILTER_SANITIZE_NUMBER_INT,
-				'address' => FILTER_SANITIZE_SPECIAL_CHARS,
-				'address' => FILTER_SANITIZE_STRING
-			);
-			$inputs = filter_var_array($inputs, $inputValidation);
-
-			$invalid_input = [];
-			foreach ($inputs as $input => $val) {
-				if (empty($val)) {
-					$invalid_input[] = $input;
-				}
-			}
-
-			if (!empty($invalid_input)) {
-				return $response->withJson([
-					'msg' => 'input invalid',
-					'inputs' => $invalid_input
-				], 400);
-			} else {
-				$values = array_values($inputs);
-				$db = $container->get('database');
-				$db->query("INSERT INTO customers VALUES ('',?,?,?,?,?)");
-				$db->bind('sssss', $values);
-				$db->execute();
-
-				if ($db->rowCount() > 0) {
-					return $response->withJson(["msg" => "Insert customer success"]);
-				} else {
-					return $response->withJson(["msg" => "Insert customer fail"], 500);
-				}
-			}
-		});
-
-
 		// PRODUCT ROUTE
 		$app->get('/products', function (Request $req, Response $res) use ($container) {
 			$result = Product::getProducts($req,  $res, $container);

@@ -3,6 +3,7 @@
 namespace users;
 
 use \Firebase\JWT\JWT;
+use \mail\Mail;
 
 class User {
   // GET USERS
@@ -19,17 +20,20 @@ class User {
 
     // set username to lowercase & hashing
     $inputs['username'] = strtolower($inputs['username']);
+    $inputs['full_name'] = ucwords($inputs['full_name']);
     $inputs['password'] = password_hash($inputs['password'], PASSWORD_DEFAULT);
-    $inputs['reg_hash'] = hash('sha256', rand());
+    $inputs['hash'] = hash('sha256', rand());
 
 
     $inputValidation = [
       'username' => FILTER_SANITIZE_SPECIAL_CHARS,
       'username' => FILTER_SANITIZE_STRING,
+      'full_name' => FILTER_SANITIZE_SPECIAL_CHARS,
+      'full_name' => FILTER_SANITIZE_STRING,
       'email' => FILTER_SANITIZE_EMAIL,
       'email' => FILTER_VALIDATE_EMAIL,
       'password' => FILTER_DEFAULT,
-      'reg_hash' => FILTER_DEFAULT,
+      'hash' => FILTER_DEFAULT,
     ];
     $inputs = filter_var_array($inputs, $inputValidation);
 
@@ -52,7 +56,7 @@ class User {
 
     // check existed username
     $username = array($inputs['username']);
-    $db->query("SELECT username FROM test_users WHERE username=?");
+    $db->query("SELECT username FROM users WHERE username=?");
     $db->bind('s', $username);
     $db->execute();
 
@@ -63,7 +67,7 @@ class User {
 
     // check existed email
     $email = array($inputs['email']);
-    $db->query("SELECT email FROM test_users WHERE email=?");
+    $db->query("SELECT email FROM users WHERE email=?");
     $db->bind('s', $email);
     $db->execute();
 
@@ -74,17 +78,105 @@ class User {
 
     // run query
     $values = array_values($inputs);
-    $db->query("INSERT INTO test_users
-                (username, email, password, reg_hash)
-                VALUES (?,?,?,?)");
-    $db->bind('ssss', $values);
+    $db->query("INSERT INTO users
+                (username, full_name, email, password, hash)
+                VALUES (?,?,?,?,?)");
+    $db->bind('sssss', $values);
     $db->execute();
 
-    if ($db->rowCount() > 0) {
-      return $res->withJson(["msg" => "registration success"], 201);
-    } else {
+    if ($db->rowCount() <= 0) {
       return $res->withJson(["msg" => "registration fail"], 500);
     }
+
+    // Sent Mail
+    $sentMail = self::sendRegisterEmail($inputs['email'], $container);
+
+    if ($sentMail !== 'mail sent') {
+      return $res->withJson(["msg" => "failed to send email"], 500);
+    }
+
+    return $res->withJson(["msg" => "registration success. check your email for verification"], 201);
+  }
+
+  public static function sendRegisterEmail($registeredEmail, $container) {
+    // db init
+    $db = $container->get('database');
+
+    // get registered data by email
+    $email = array($registeredEmail);
+    $db->query("SELECT username, full_name, email, hash FROM users WHERE email=?");
+    $db->bind('s', $email);
+    $db->execute();
+
+    $user = $db->single();
+    $username = $user['username'];
+    $full_name = $user['full_name'];
+    $email = $user['email'];
+    $hash = $user['hash'];
+
+    // Set Message
+    $subject = 'SI Stok Barang';
+    $body = '
+      <p>Hi ' . $full_name . ',</p>
+      <p>Terima kasih sudah registrasi sebagai user dengan username ' . $username . '. Silahkan click tombol di bawah ini untuk menyelesaikan registrasi akun anda.</p>
+      <a href="localhost:8080/user/regist/verification?email=' . $email . '&hash=' . $hash . '" style="-webkit-border-radius: 28;
+      -moz-border-radius: 28;
+      border-radius: 28px;
+      font-family: Arial;
+      color: #ffffff;
+      font-size: 20px;
+      background: #3498db;
+      padding: 10px 20px 10px 20px;
+      text-decoration: none;">Verify Now</a>
+      <br><br>
+      <p>Click/copy link berikut apabila tombol diatas tidak berfungsi</p>
+      <a href="localhost:8080/user/regist/verification?email=' . $email . '&hash=' . $hash . '">localhost:8080/user/regist/verification?email=' . $email . '&hash=' . $hash . '</a>
+    ';
+
+    $alt_body = "
+    Hi {$full_name}, Terima kasih sudah registrasi sebagai user dengan username {$username}. Silahkan click link berikut untuk menyelesaikan registrasi akun anda. localhost:8080/user/regist/verification?email={$email}&hash={$hash}
+    ";
+
+    // sent mail
+    $mail = new Mail($email, $full_name, $subject, $body, $alt_body);
+    return $mail->sentMail();
+  }
+
+  // USER ACTIVATION
+  public static function userVerification($req, $res, $container) {
+    // db init
+    $db = $container->get('database');
+
+    $email = $req->getQueryParam('email');
+    $hash = $req->getQueryParam('hash');
+
+    // get data from db where emai and hash match
+    $values = array($email, $hash);
+    $db->query("SELECT email, hash, active_status FROM users WHERE email=? AND hash=?");
+    $db->bind('ss', $values);
+    $db->execute();
+
+    $user = $db->single();
+    // if user not found
+    if (is_null($user)) {
+      return $res->withStatus(401);
+    }
+
+    // if user active
+    if ($user['active_status'] === '1') {
+      return $res->withJson(["msg" => "user already active"], 403);
+    }
+
+    // run query
+    $db->query("UPDATE users SET active_status = '1' WHERE email=? AND hash=?");
+    $db->bind('ss', $values);
+    $db->execute();
+
+    if ($db->rowCount() <= 0) {
+      return $res->withJson(["msg" => "activation error"], 500);
+    }
+
+    return $res->withJson(["msg" => "activation success"], 201);
   }
 
   // LOGIN USER
@@ -122,7 +214,7 @@ class User {
 
     // check existed username
     $username = array($inputs['username']);
-    $db->query("SELECT username, password, privilege FROM test_users WHERE username=?");
+    $db->query("SELECT username, password, privilege FROM users WHERE username=?");
     $db->bind('s', $username);
     $db->execute();
 
