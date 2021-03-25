@@ -1,6 +1,6 @@
 -- MariaDB dump 10.17  Distrib 10.4.11-MariaDB, for Win64 (AMD64)
 --
--- Host: localhost    Database: sistem_stok
+-- Host: localhost    Database: dev_sistem_stok
 -- ------------------------------------------------------
 -- Server version	10.4.11-MariaDB
 
@@ -63,7 +63,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,6 +72,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (27,'abc','Def Ghi','nhoqpwfldbrppzhfkk@miucce.com','$2y$10$xgZ.snmQErfA5Gw0nbVIMOBbPR4jVhJoIwWeub6bFkticpLBe66Ga','8dbcef7d4ce01501bc197f551a6b4d2ed6acc65f3cd1f11e3f8545e90f1c3d3b','1','user',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -84,4 +85,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-25  9:16:28
+-- Dump completed on 2021-03-25  9:16:44
